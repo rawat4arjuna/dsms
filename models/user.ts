@@ -8,6 +8,8 @@ interface UserAttributes {
   name: string;
   email: string;
   password: string;
+  passwordResetToken?: string | null;
+  passwordResetExpires?: Date | null;
 }
 
 // Define the attributes required for creating a new User
@@ -21,6 +23,9 @@ class User
   public name!: string;
   public email!: string;
   public password!: string;
+
+  public passwordResetToken!: string | null;
+  public passwordResetExpires!: Date | null;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -51,6 +56,14 @@ User.init(
     password: {
       type: new DataTypes.STRING(128),
       allowNull: false,
+    },
+    passwordResetToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    passwordResetExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {
