@@ -1,10 +1,9 @@
 // pages/api/users.ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse, NextRequest } from "next/server";
+import models from "@/models";
 
-import dbConnect from "@/lib/mongoose";
-import User from "@/models/User";
-
+const { User } = models;
 interface ExtendedNextApiRequest extends NextApiRequest {
   json(): any;
   body: {
@@ -14,14 +13,18 @@ interface ExtendedNextApiRequest extends NextApiRequest {
   };
 }
 export const POST = async (req: ExtendedNextApiRequest) => {
-  await dbConnect();
-
   try {
     const { name, email, password } = await req.json();
-    const user = new User({ name, email, password });
-    await user.save();
-    return NextResponse.json({ success: true, user });
+    console.log("oododoodood", name, email, password);
+    const newUser = await User.create({ name, email, password });
+
+    return NextResponse.json({ success: true, newUser });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message });
   }
+};
+
+export const GET = async (req: ExtendedNextApiRequest) => {
+  const users = await User.findAll();
+  NextResponse.json(users);
 };
