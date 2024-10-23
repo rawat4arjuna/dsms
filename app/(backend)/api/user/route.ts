@@ -15,7 +15,6 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 export const POST = async (req: ExtendedNextApiRequest) => {
   try {
     const { name, email, password } = await req.json();
-    console.log("oododoodood", name, email, password);
     const newUser = await User.create({ name, email, password });
 
     return NextResponse.json({ success: true, newUser });
