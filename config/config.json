@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "u956971248_root",
+    "password": "Qvl@12345",
+    "database": "u956971248_dsms",
+    "host": "193.203.184.158",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse, NextRequest } from "next/server";
 import models from "@/models";
-import { generateToken } from "@/utils/jwt";
-
+import { Op } from "sequelize";
 const { User } = models;
 interface ExtendedNextApiRequest extends NextApiRequest {
   json(): any;
@@ -13,35 +12,35 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 }
 export const POST = async (req: ExtendedNextApiRequest) => {
   try {
-    const { email, password } = await req.json();
-    if (!email || !password) {
+    const { token, newPassword } = await req.json();
+
+    if (!token || !newPassword) {
       return NextResponse.json(
-        { error: "Email and password are required" },
+        { error: "Token and new password are required" },
         { status: 400 }
       );
     }
-    const user = await User.findOne({ where: { email } });
+
+    const user = await User.findOne({
+      where: {
+        passwordResetToken: token,
+        passwordResetExpires: { [Op.gt]: new Date() },
+      },
+    });
 
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
-        { status: 401 }
+        { error: "Invalid or expired token" },
+        { status: 404 }
       );
     }
-
-    const isPasswordValid = await user.checkPassword(password);
-
-    if (!isPasswordValid) {
-      return NextResponse.json(
-        { error: "Invalid email or password" },
-        { status: 401 }
-      );
-    }
-
-    const token = generateToken(user.id);
+    user.password = newPassword;
+    user.passwordResetToken = null;
+    user.passwordResetExpires = null;
+    await user.save();
 
     return NextResponse.json(
-      { token, msg: "login successfully." },
+      { message: "Password reset successfully" },
       { status: 200 }
     );
   } catch (error: any) {
