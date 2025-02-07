@@ -43,7 +43,7 @@ const Login = () => {
             className="flex flex-col justify-around h-full"
           >
             <Typography variant="h1" component="h2" sx={{textAlign: "center"}}>
-              DSMS
+              {/* DSMS */}
             </Typography>
               <TextField
                 id="outlined-basic"
