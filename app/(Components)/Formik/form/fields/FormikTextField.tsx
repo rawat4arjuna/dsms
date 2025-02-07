@@ -74,12 +74,12 @@ const FormikTextField: React.FC<FormikTextFieldProps> = ({
         }}
         value={formik.values?.[props.name as string] || ""}
         onChange={(e) => {
-          if (handleChange) handleChange(e, formik);
-          else onChange(props.name as string, e.target.value);
+          formik.setFieldValue(props.name,e.target.value)
+         
         }}
         onBlur={() => {
-          if (handleBlur) handleBlur(props.name as string, formik);
-          onBlur(props.name as string, formik);
+          
+          formik.handleBlur(props.name);
         }}
         error={meta.touched && Boolean(meta.error)}
         helperText={meta.touched && meta.error ? meta.error : null}
