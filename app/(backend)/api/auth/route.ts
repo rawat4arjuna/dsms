@@ -11,6 +11,51 @@ interface ExtendedNextApiRequest extends NextApiRequest {
     password: string;
   };
 }
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: User login
+ *     description: Authenticates a user with email and password, returning a JWT token if successful.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "securePassword123"
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *                 msg:
+ *                   type: string
+ *                   example: "Login successfully."
+ *       400:
+ *         description: Missing email or password
+ *       401:
+ *         description: Invalid email or password
+ *       500:
+ *         description: Server error
+ */
 export const POST = async (req: ExtendedNextApiRequest) => {
   try {
     const { email, password } = await req.json();
