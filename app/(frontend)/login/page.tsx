@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as yup from "yup";
 import { Typography, TextField, Paper, Button, Container } from "@mui/material";
 import Controller from "@/app/(Components)/Formik/form/fields/Controller";
+import useAuth from "@/app/hooks/useAuth";
 
 const schema = yup.object({
   email: yup.string().email().required("Please enter your email"),
@@ -14,7 +15,7 @@ const schema = yup.object({
 
 
 const Login = () => {
-
+const {handleLogin} = useAuth()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -22,6 +23,7 @@ const Login = () => {
     },
     onSubmit: (values, action) => {
       console.log(values);
+      handleLogin(values)
       action.resetForm();
     },
     validationSchema: schema
