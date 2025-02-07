@@ -12,6 +12,65 @@ interface ExtendedNextApiRequest extends NextApiRequest {
     password: string;
   };
 }
+
+
+/**
+ * @swagger
+ * /api/user:
+ *   post:
+ *     summary: Create a new user
+ *     description: Registers a new user with name, email, and password.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: John Doe
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: john@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "securePassword123"
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 newUser:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       example: 1
+ *                     name:
+ *                       type: string
+ *                       example: John Doe
+ *                     email:
+ *                       type: string
+ *                       format: email
+ *                       example: john@example.com
+ *       400:
+ *         description: Invalid input data
+ *       500:
+ *         description: Server error
+ */
 export const POST = async (req: ExtendedNextApiRequest) => {
   try {
     const { name, email, password } = await req.json();
