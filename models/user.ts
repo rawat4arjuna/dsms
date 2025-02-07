@@ -7,6 +7,7 @@ interface UserAttributes {
   id: number;
   name: string;
   email: string;
+  type: string;
   password: string;
   passwordResetToken?: string | null;
   passwordResetExpires?: Date | null;
@@ -22,6 +23,7 @@ class User
   public id!: number;
   public name!: string;
   public email!: string;
+  public type!: string;
   public password!: string;
 
   public passwordResetToken!: string | null;
@@ -51,6 +53,11 @@ User.init(
     email: {
       type: new DataTypes.STRING(128),
       allowNull: false,
+      unique: true,
+    },
+    type: {
+      type: new DataTypes.STRING(128),
+      allowNull: true,
       unique: true,
     },
     password: {

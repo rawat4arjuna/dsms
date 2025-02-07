@@ -3,6 +3,8 @@
 import { ReactNode } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline, Container } from "@mui/material";
+import { SnackbarProvider } from "./(Components)/SnackBar/SnackBar";
+import Navbar from "./(Components)/NavBar/NavBar";
 
 // Define a Material UI theme (customizable)
 const theme = createTheme({
@@ -25,7 +27,20 @@ const ChildLayout = ({ children }: ChildLayoutProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="md">{children}</Container>
+      <SnackbarProvider>
+        <Navbar />
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "90vh",
+          }}
+        >
+          {" "}
+          {children}
+        </Container>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 };

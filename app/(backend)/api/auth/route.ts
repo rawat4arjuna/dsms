@@ -83,7 +83,7 @@ export const POST = async (req: ExtendedNextApiRequest) => {
       );
     }
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id,user.type);
 
     return NextResponse.json(
       { token, msg: "login successfully." },

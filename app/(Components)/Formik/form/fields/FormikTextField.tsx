@@ -75,7 +75,6 @@ const FormikTextField: React.FC<FormikTextFieldProps> = ({
         value={formik.values?.[props.name as string] || ""}
         onChange={(e) => {
           formik.setFieldValue(props.name,e.target.value)
-         
         }}
         onBlur={() => {
           
